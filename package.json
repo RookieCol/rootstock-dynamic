@@ -1,5 +1,5 @@
 {
-  "name": "my-dynamic-project",
+  "name": "rootstock-dynamic",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,11 +11,18 @@
   "dependencies": {
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.13"
+    "next": "14.2.13",
+    "@dynamic-labs/sdk-react-core": "^3.0.0-alpha",
+    "viem": "*",
+    "@dynamic-labs/wagmi-connector": "^3.0.0-alpha",
+    "@tanstack/react-query": "^5.27.5",
+    "wagmi": "^2.5.7",
+    "@dynamic-labs/ethereum": "^3.0.0-alpha",
+    "@dynamic-labs/bitcoin": "^3.0.0-alpha"
   },
   "devDependencies": {
     "typescript": "^5",
-    "@types/node": "^20",
+    "@types/node": "^22.7.4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
