@@ -1,41 +1,20 @@
-"use client";
-
+import Balances from "@/components/Balances";
+import SignMessage from "@/components/SignMessage";
+import Transfer from "@/components/Transfer";
 import { DynamicWidget } from "@/lib/dynamic";
 
 export default function Main() {
   return (
-    <div>
-      <div className="header">
-        <div className="header-buttons">
-          <button
-            className="docs-button bg-black"
-            onClick={() =>
-              window.open(
-                "https://docs.dynamic.xyz",
-                "_blank",
-                "noopener,noreferrer"
-              )
-            }
-          >
-            Docs
-          </button>
-          <button
-            className="get-started"
-            onClick={() =>
-              window.open(
-                "https://app.dynamic.xyz",
-                "_blank",
-                "noopener,noreferrer"
-              )
-            }
-          >
-            Get started
-          </button>
-        </div>
-      </div>
-      <div className="modal">
+    <main>
+      <header></header>
+      <div className="container mx-auto p-4 flex justify-center">
         <DynamicWidget />
       </div>
-    </div>
+      <section className="container mx-auto p-4 space-y-6">
+        <Balances />
+        <Transfer />
+        <SignMessage />
+      </section>
+    </main>
   );
 }
