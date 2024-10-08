@@ -9,24 +9,37 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { SpinnerIcon, useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { SpinnerIcon } from "@dynamic-labs/sdk-react-core";
 import { useState } from "react";
+import { useSignMessage } from "wagmi"; 
+
+/**
+ * SignMessage Component
+ * 
+ * This component allows the user to sign a message with their wallet using wagmi's `useSignMessage` hook.
+ * It handles the process of signing the message "Keep building on Rootstock!" and displays the resulting signature hash.
+ 
+ * Hooks Used:
+ * - useSignMessage: Hook to trigger signing a message with the user's wallet.
+ * 
+ */
 
 export default function SignMessage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const { primaryWallet } = useDynamicContext();
+  const [signatureHash, setSignatureHash] = useState<string | null>(null);
+  const { signMessageAsync } = useSignMessage();
 
   async function handleVerify() {
-    if (!primaryWallet) return;
-
     try {
       setLoading(true);
 
-      const signature = await primaryWallet.signMessage(
-        "You're signing a message on Rootstock!"
-      );
-      console.log("signature", signature);
+      // Sign the message
+      const signature = await signMessageAsync({
+        message: "Keep building on Rootstock", // <3
+      });
+
+      setSignatureHash(signature);
 
       toast({
         title: "Success",
@@ -51,12 +64,21 @@ export default function SignMessage() {
         <CardDescription>Sign a message with your account</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Button onClick={handleVerify} className="w-full" disabled={loading}>
+        <Button onClick={handleVerify} className="w-full py-3" disabled={loading}>
           Sign Message{" "}
           {loading ? (
             <SpinnerIcon className="size-5 animate-spin ml-2" />
           ) : null}
         </Button>
+
+        {signatureHash && (
+          <div className="pt-4">
+            Signature Hash:{" "}
+            <span className="font-bold">
+              {signatureHash.substring(0, 40)}... {/* Truncated for display */}
+            </span>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
