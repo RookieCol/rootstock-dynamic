@@ -11,13 +11,13 @@ export default function Cards() {
   return (
     <section
       className={cn(
-        "max-w-[1100px] mx-auto p-4 space-y-6",
+        "max-w-[1100px] w-full mx-auto p-4 my-10 md:columns-2 space-y-4",
         user ? "opacity-100" : "opacity-50 pointer-events-none"
       )}
     >
       <Balances />
-      <Transfer />
       <SignMessage />
+      <Transfer />
     </section>
   );
 }

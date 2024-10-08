@@ -4,7 +4,7 @@ import { DynamicWidget } from "@/lib/dynamic";
 
 export default function Main() {
   return (
-    <main>
+    <main className="min-h-svh flex flex-col justify-between">
       <header className="container mx-auto p-4 flex justify-center mt-10">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-black *:px-1">
           <span className="bg-[#ff9103]">Rootstock</span>{" "}
