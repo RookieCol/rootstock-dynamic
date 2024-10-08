@@ -96,7 +96,6 @@ The folder structure of the project is as follows:
 ```
 dynamic-web3-tool/
 ├── components/
-│   ├── WalletConnectButton.tsx      // Wallet connection button
 │   ├── Balances.tsx                  // Component for displaying token balances
 │   ├── Transfer.tsx                 // Component for transferring tokens
 │   ├── SignMessage.tsx              // Component for signing messages
