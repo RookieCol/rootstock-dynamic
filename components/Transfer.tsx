@@ -29,14 +29,21 @@ import { SequentialDotsLoader } from "./Loader";
 const EXPLORER_URL = "https://explorer.testnet.rsk.co/tx/";
 const tokens = [
   { name: "rBTC", symbol: "rBTC", address: "" }, // Native rBTC doesn't have an address
-  { name: "RIF", symbol: "tRIF", address: "0x19F64674D8A5B4E652319F5e239eFd3bc969A1fE" },
-  { name: "Dollar on Chain", symbol: "DOC", address: "0xCB46c0ddc60D18eFEB0E586C17Af6ea36452Dae0" },
+  {
+    name: "RIF",
+    symbol: "tRIF",
+    address: "0x19F64674D8A5B4E652319F5e239eFd3bc969A1fE",
+  },
+  {
+    name: "Dollar on Chain",
+    symbol: "DOC",
+    address: "0xCB46c0ddc60D18eFEB0E586C17Af6ea36452Dae0",
+  },
 ];
-
 
 /**
  * Transfer component allows users to select a token, specify a recipient and amount, and send the token.
- * The component integrates with wagmi's `useSendTransaction` and `useWaitForTransactionReceipt` hooks 
+ * The component integrates with wagmi's `useSendTransaction` and `useWaitForTransactionReceipt` hooks
  * to handle the transaction process and display its status.
  *
  * Hooks Used:
@@ -49,18 +56,24 @@ export default function Transfer() {
   const [amount, setAmount] = useState("");
   const [selectedToken, setSelectedToken] = useState("");
 
-  const { data: hash, error, isPending, sendTransaction } = useSendTransaction();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  });
+  const {
+    data: hash,
+    error,
+    isPending,
+    sendTransaction,
+  } = useSendTransaction();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (selectedToken && amount && recipient) {
       try {
-         sendTransaction({
+        sendTransaction({
           to: recipient as Address,
-          value: parseEther(amount), 
+          value: parseEther(amount),
         });
       } catch (err) {
         console.error(err);
@@ -76,7 +89,7 @@ export default function Transfer() {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Send Token Form */}
-        <form onSubmit={handleSend}>
+        <form onSubmit={handleSend} className="space-y-4">
           {/* Select Token for Transfer */}
           <div className="space-y-2">
             <Label htmlFor="token-select">Select Token to Send</Label>
@@ -124,9 +137,9 @@ export default function Transfer() {
           <Button
             type="submit"
             disabled={isPending || isConfirming}
-            className="w-full py-3"
+            className="w-full py-3 "
           >
-            {isPending ? 'Sending...' : 'Send Tokens'}
+            {isPending ? "Sending..." : "Send Tokens"}
           </Button>
         </form>
 
@@ -145,7 +158,9 @@ export default function Transfer() {
             </a>
           </div>
         )}
-        {isConfirmed && <div className="text-green-500">Transaction confirmed.</div>}
+        {isConfirmed && (
+          <div className="text-green-500">Transaction confirmed.</div>
+        )}
         {error && <div>Error: {(error as BaseError).message}</div>}
       </CardContent>
     </Card>
