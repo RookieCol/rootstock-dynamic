@@ -9,6 +9,7 @@ This project leverages **wagmi** hooks for seamless wallet connection, balance r
 For more details on **Embedded Wallets**, explore the official [Dynamic Embedded Wallets Documentation](https://www.dynamic.xyz/features/embedded-wallets), which offers further insights into wallet management and features.
 
 To get started, you’ll need to create an environment ID for your Dynamic integration. Follow the guide on [Setting up Dynamic](https://www.dynamic.xyz/get-started) to configure your environment and begin building with **wagmi** and **Dynamic**.
+
 ## Features
 
 - **Wallet Connection**: Easily connect wallets such as MetaMask and WalletConnect.
@@ -71,6 +72,8 @@ Add the following content to `.env.local`:
 NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID=
 ```
 
+You can get your environment ID from the [Dynamic dashboard](https://app.dynamic.xyz/dashboard/overview).
+
 ### 4. Run the Development Server
 
 Start the development server using Bun or Yarn:
@@ -104,17 +107,15 @@ dynamic-web3-tool/
 
 ## How to Use
 
-1. **Connect Wallet**: Use the `WalletConnectButton` component to connect your wallet.
+1. **Connect Wallet**: Use the `DynamicWidget` component to connect your wallet via social login or EOA.
 2. **Retrieve Balances**: Use the `Balance` component to display balances for rBTC, tRIF, and DOC tokens.
 3. **Transfer Tokens**: The `Transfer` component allows you to transfer any of the supported tokens.
 4. **Sign Messages**: Use the `SignMessage` component to sign arbitrary messages and verify signatures.
 
-
-
 ## Contributors
 
 - **rookiecol** ([@rookiecol](https://github.com/rookiecol))
-- **flash**([@flash](https://github.com/chrisarevalo11))
+- **flash** ([@flash](https://github.com/chrisarevalo11))
 
 ## Troubleshooting
 
@@ -122,5 +123,22 @@ dynamic-web3-tool/
 - **RPC Connection Issues**: Verify that the RPC URLs are reachable and correct.
 - **Wallet Connection Issues**: Check if MetaMask is installed and the wallet is connected to the Rootstock Testnet.
 
+## Contributing
 
+We welcome contributions from the community. Please fork the repository and submit pull requests with your changes. Ensure your code adheres to the project's main objective.
 
+## Support
+
+For any questions or support, please open an issue on the repository or reach out to the maintainers.
+
+# Disclaimer
+
+The software provided in this GitHub repository is offered “as is,” without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
+
+- **Testing:** The software has not undergone testing of any kind, and its functionality, accuracy, reliability, and suitability for any purpose are not guaranteed.
+- **Use at Your Own Risk:** The user assumes all risks associated with the use of this software. The author(s) of this software shall not be held liable for any damages, including but not limited to direct, indirect, incidental, special, consequential, or punitive damages arising out of the use of or inability to use this software, even if advised of the possibility of such damages.
+- **No Liability:** The author(s) of this software are not liable for any loss or damage, including without limitation, any loss of profits, business interruption, loss of information or data, or other pecuniary loss arising out of the use of or inability to use this software.
+- **Sole Responsibility:** The user acknowledges that they are solely responsible for the outcome of the use of this software, including any decisions made or actions taken based on the software’s output or functionality.
+- **No Endorsement:** Mention of any specific product, service, or organization does not constitute or imply endorsement by the author(s) of this software.
+- **Modification and Distribution:** This software may be modified and distributed under the terms of the license provided with the software. By modifying or distributing this software, you agree to be bound by the terms of the license.
+- **Assumption of Risk:** By using this software, the user acknowledges and agrees that they have read, understood, and accepted the terms of this disclaimer and assumes all risks associated with the use of this software.
