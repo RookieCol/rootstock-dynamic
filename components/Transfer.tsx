@@ -21,14 +21,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Address, BaseError, parseEther } from "viem";
-import { useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
-import { SequentialDotsLoader } from "./Loader";
+import { Address, parseEther } from "viem";
+import { useConfig, useSendTransaction } from "wagmi";
+import { SpinnerIcon } from "@dynamic-labs/sdk-react-core";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "./ui/toast";
+import { waitForTransactionReceipt } from "wagmi/actions";
 
-// Block explorer for RSK Testnet
 const EXPLORER_URL = "https://explorer.testnet.rsk.co/tx/";
 const tokens = [
-  { name: "rBTC", symbol: "rBTC", address: "" }, // Native rBTC doesn't have an address
+  { name: "rBTC", symbol: "rBTC", address: "" },
   {
     name: "RIF",
     symbol: "tRIF",
@@ -52,45 +54,80 @@ const tokens = [
  */
 
 export default function Transfer() {
+  const { toast } = useToast();
+  const config = useConfig();
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
+  const [loading, setLoading] = useState(false);
   const [selectedToken, setSelectedToken] = useState("");
 
-  const {
-    data: hash,
-    error,
-    isPending,
-    sendTransaction,
-  } = useSendTransaction();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash,
-    });
+  const { data, sendTransactionAsync } = useSendTransaction();
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (selectedToken && amount && recipient) {
       try {
-        sendTransaction({
+        setLoading(true);
+        const hash = await sendTransactionAsync({
           to: recipient as Address,
           value: parseEther(amount),
         });
+
+        await waitForTransactionReceipt(config, {
+          hash: hash as `0x${string}`,
+          confirmations: 3,
+        });
+
+        toast({
+          title: "Tokens sent successfully",
+          description: "The transaction was successful",
+          action: (
+            <ToastAction altText="View on explorer">
+              <a
+                href={EXPLORER_URL + hash}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                View on explorer
+              </a>
+            </ToastAction>
+          ),
+        });
+
+        setRecipient("");
+        setAmount("");
       } catch (err) {
+        toast({
+          title: "Transaction Failed",
+          variant: "destructive",
+          description: "Something went wrong while sending the transaction",
+          action: data && (
+            <ToastAction altText="View on explorer">
+              <a
+                href={EXPLORER_URL + data}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                See tx on explorer
+              </a>
+            </ToastAction>
+          ),
+        });
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     }
   };
 
   return (
-    <Card>
+    <Card className="h-fit">
       <CardHeader>
         <CardTitle>Send Tokens</CardTitle>
         <CardDescription>Transfer tokens to another address</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Send Token Form */}
         <form onSubmit={handleSend} className="space-y-4">
-          {/* Select Token for Transfer */}
           <div className="space-y-2">
             <Label htmlFor="token-select">Select Token to Send</Label>
             <Select onValueChange={setSelectedToken}>
@@ -110,7 +147,6 @@ export default function Transfer() {
             </Select>
           </div>
 
-          {/* Amount Input */}
           <div className="space-y-2">
             <Label htmlFor="amount">Amount</Label>
             <Input
@@ -122,7 +158,6 @@ export default function Transfer() {
             />
           </div>
 
-          {/* Recipient Input */}
           <div className="space-y-2">
             <Label htmlFor="recipient">Recipient Address</Label>
             <Input
@@ -133,35 +168,13 @@ export default function Transfer() {
             />
           </div>
 
-          {/* Send Button with padding */}
-          <Button
-            type="submit"
-            disabled={isPending || isConfirming}
-            className="w-full py-3 "
-          >
-            {isPending ? "Sending..." : "Send Tokens"}
+          <Button type="submit" disabled={loading} className="w-full py-3 ">
+            Send Tokens{" "}
+            {loading ? (
+              <SpinnerIcon className="size-5 animate-spin ml-2" />
+            ) : null}
           </Button>
         </form>
-
-        {/* Loader and Transaction Status */}
-        {isConfirming && <SequentialDotsLoader />}
-        {hash && (
-          <div>
-            Transaction Hash:{" "}
-            <a
-              href={`${EXPLORER_URL}${hash}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold underline"
-            >
-              {hash}
-            </a>
-          </div>
-        )}
-        {isConfirmed && (
-          <div className="text-green-500">Transaction confirmed.</div>
-        )}
-        {error && <div>Error: {(error as BaseError).message}</div>}
       </CardContent>
     </Card>
   );

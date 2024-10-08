@@ -11,12 +11,14 @@ export default function Cards() {
   return (
     <section
       className={cn(
-        "max-w-[1100px] w-full mx-auto p-4 my-10 md:columns-2 space-y-4",
+        "max-w-[1100px] w-full mx-auto p-4 my-10 grid gap-4 md:grid-cols-2",
         user ? "opacity-100" : "opacity-50 pointer-events-none"
       )}
     >
-      <Balances />
-      <SignMessage />
+      <div className="flex flex-col gap-4">
+        <Balances />
+        <SignMessage />
+      </div>
       <Transfer />
     </section>
   );

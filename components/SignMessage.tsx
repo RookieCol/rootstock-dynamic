@@ -9,9 +9,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { formatAddress } from "@/lib/utils";
 import { SpinnerIcon } from "@dynamic-labs/sdk-react-core";
 import { useState } from "react";
-import { useSignMessage } from "wagmi"; 
+import { useSignMessage } from "wagmi";
+import Clipboard from "./Clipboard";
 
 /**
  * SignMessage Component
@@ -34,7 +36,6 @@ export default function SignMessage() {
     try {
       setLoading(true);
 
-      // Sign the message
       const signature = await signMessageAsync({
         message: "Keep building on Rootstock", // <3
       });
@@ -64,7 +65,11 @@ export default function SignMessage() {
         <CardDescription>Sign a message with your account</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Button onClick={handleVerify} className="w-full py-3" disabled={loading}>
+        <Button
+          onClick={handleVerify}
+          className="w-full py-3"
+          disabled={loading}
+        >
           Sign Message{" "}
           {loading ? (
             <SpinnerIcon className="size-5 animate-spin ml-2" />
@@ -72,12 +77,12 @@ export default function SignMessage() {
         </Button>
 
         {signatureHash && (
-          <div className="pt-4">
-            Signature Hash:{" "}
-            <span className="font-bold">
-              {signatureHash.substring(0, 40)}... {/* Truncated for display */}
+          <p className="pt-4">
+            <span className="font-bold">Signature Hash:</span>{" "}
+            <span className="inline-flex items-center gap-2">
+              {formatAddress(signatureHash)} <Clipboard text={signatureHash} />
             </span>
-          </div>
+          </p>
         )}
       </CardContent>
     </Card>
