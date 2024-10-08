@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Embedded Wallet in Rootstock using Dynamic
+
+> "Building the future of finance, one line of code at a time."
+
+**⚠️ Warning: This is a starter kit designed for hackathons and rapid prototyping. It is intended for educational and experimental purposes only. Use it at your own risk, and ensure thorough testing before deploying in production environments.**
+
+This project leverages **wagmi** hooks for seamless wallet connection, balance retrieval, token transfers, and message signing, making it easy to integrate Web3 functionality into your Next.js applications. The **wagmi** library provides essential hooks for interacting with wallets like MetaMask and WalletConnect, allowing developers to focus on building their dApps rather than managing low-level blockchain interactions.
+
+For more details on **Embedded Wallets**, explore the official [Dynamic Embedded Wallets Documentation](https://www.dynamic.xyz/features/embedded-wallets), which offers further insights into wallet management and features.
+
+To get started, you’ll need to create an environment ID for your Dynamic integration. Follow the guide on [Setting up Dynamic](https://www.dynamic.xyz/get-started) to configure your environment and begin building with **wagmi** and **Dynamic**.
+## Features
+
+- **Wallet Connection**: Easily connect wallets such as MetaMask and WalletConnect.
+- **Balances**: Retrieve balances for rBTC, tRIF, and DOC tokens on the Rootstock Testnet.
+- **Transfers**: Transfer rBTC, tRIF, and DOC tokens between addresses.
+- **Sign Messages**: Sign and verify messages using the connected wallet.
+- **Rootstock Testnet**: Preconfigured for the Rootstock Testnet.
+
+## Prerequisites
+
+Ensure that you have the following tools installed:
+
+- **Node.js** (v19.x or later)
+- **Bun** (v1.1.x or later) or **Yarn** (recommended for Next.js project)
+
+### Dependencies
+
+The project uses the following packages:
+
+- **Next.js**: Server-rendered React framework.
+- **wagmi**: React hooks for Web3 interactions.
+- **viem**: For interacting with contracts on the Rootstock blockchain.
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+git clone https://github.com/yourusername/dynamic-web3-tool.git
+cd dynamic-web3-tool
+```
+
+### 2. Install Dependencies
+
+You can choose either Bun or Yarn to install the required packages:
+
+Using **Bun**:
+
+```bash
+bun install
+```
+
+Or with **Yarn**:
+
+```bash
+yarn install
+```
+
+### 3. Set Up Environment Variables
+
+Create a `.env.local` file in the root of your project to define environment variables:
+
+```bash
+mv .env.local .env.local
+```
+
+Add the following content to `.env.local`:
+
+```bash
+NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID=
+```
+
+### 4. Run the Development Server
+
+Start the development server using Bun or Yarn:
+
+Using **Bun**:
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or with **Yarn**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Navigate to [http://localhost:3000](http://localhost:3000) to view the project in your browser.
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+The folder structure of the project is as follows:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+dynamic-web3-tool/
+├── components/
+│   ├── WalletConnectButton.tsx      // Wallet connection button
+│   ├── Balances.tsx                  // Component for displaying token balances
+│   ├── Transfer.tsx                 // Component for transferring tokens
+│   ├── SignMessage.tsx              // Component for signing messages
+└── package.json
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How to Use
 
-## Deploy on Vercel
+1. **Connect Wallet**: Use the `WalletConnectButton` component to connect your wallet.
+2. **Retrieve Balances**: Use the `Balance` component to display balances for rBTC, tRIF, and DOC tokens.
+3. **Transfer Tokens**: The `Transfer` component allows you to transfer any of the supported tokens.
+4. **Sign Messages**: Use the `SignMessage` component to sign arbitrary messages and verify signatures.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Contributors
+
+- **rookiecol** ([@rookiecol](https://github.com/rookiecol))
+- **flash**([@flash](https://github.com/chrisarevalo11))
+
+## Troubleshooting
+
+- **Invalid Contract Address**: Ensure the contract addresses are correctly set in the `.env.local` file.
+- **RPC Connection Issues**: Verify that the RPC URLs are reachable and correct.
+- **Wallet Connection Issues**: Check if MetaMask is installed and the wallet is connected to the Rootstock Testnet.
+
+
+
