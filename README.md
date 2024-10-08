@@ -63,7 +63,7 @@ yarn install
 Create a `.env.local` file in the root of your project to define environment variables:
 
 ```bash
-mv .env.local .env.local
+mv .env.local.example .env.local
 ```
 
 Add the following content to `.env.local`:
